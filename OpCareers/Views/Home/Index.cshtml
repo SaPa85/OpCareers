@@ -1,0 +1,98 @@
+﻿@model IEnumerable<OpCareers.Models.HomePage>
+
+    <fieldset>
+        @{
+            ViewBag.Title = "OpCareers";
+        }
+
+
+        @if (Session["UserName"] != null)
+        {<text>
+                Welcome @Session["UserName"].ToString() </text>
+    }
+    </fieldset>
+
+    <p>
+        @if (Model.Select(e => e.activeUser.IsRecruiter).FirstOrDefault() == true)
+        {
+            @Html.ActionLink("Create New", "Create")
+        }
+    </p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.jobs.First().Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.jobs.First().Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.jobs.First().Hours)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.jobs.First().Salary)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.jobs.First().DateCreated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.jobs.First().TimeCreated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.jobs.First().DateClosed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.jobs.First().TimeClosed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.jobs.First().AuthorID)
+        </th>
+        <th></th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        foreach (var job in item.jobs)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => job.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => job.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => job.Hours)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => job.Salary)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => job.DateCreated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => job.TimeCreated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => job.DateClosed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => job.TimeClosed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => job.AuthorID)
+                </td>
+                <td>
+                    @if (Model.Select(e => e.activeUser.UserID).FirstOrDefault() == job.AuthorID)
+                    {
+                    @Html.ActionLink("Edit", "Edit", new { id = job.JobID }) 
+
+                    @Html.ActionLink("Delete", "Delete", new { id = job.JobID })
+                    }
+                </td>
+            </tr>
+        }
+    }
+
+    </table>
